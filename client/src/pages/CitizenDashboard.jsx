@@ -134,9 +134,103 @@ export default function CitizenDashboard({ initialView }) {
             setConnectionError(true);
         }
     };
+    const handlePhotoChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setPhoto(file);
+            const reader = new FileReader();
+            reader.onloadend = () => setPhotoPreview(reader.result);
+            reader.readAsDataURL(file);
+        }
+    };
 
-    // ... (rest of the file until render return)
+    const handleLiveLocation = () => {
+        setLocationLoading(true);
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (pos) => {
+                    setPosition({ lat: pos.coords.latitude, lng: pos.coords.longitude });
+                    setMessage({ type: 'success', text: '📍 Location captured!' });
+                    setLocationLoading(false);
+                },
+                (err) => {
+                    setMessage({ type: 'error', text: 'GPS Error. Try again.' });
+                    setLocationLoading(false);
+                },
+                { enableHighAccuracy: true }
+            );
+        } else {
+            setMessage({ type: 'error', text: 'Geolocation not supported.' });
+            setLocationLoading(false);
+        }
+    };
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (!formData.type || !formData.description) return setMessage({ type: 'error', text: 'Fill required fields.' });
+
+        setLoading(true);
+        try {
+            const data = new FormData();
+            data.append('type', formData.type);
+            data.append('description', formData.description);
+            if (photo) data.append('image', photo);
+            if (position) {
+                data.append('latitude', position.lat);
+                data.append('longitude', position.lng);
+            }
+
+            await axios.post('/complaints', data, { headers: { 'Content-Type': 'multipart/form-data' } });
+
+            setMessage({ type: 'success', text: '✅ Your complaint has been submitted!' });
+            setFormData({ type: '', description: '', tags: '' });
+            setPhoto(null);
+            setPhotoPreview(null);
+            setPosition(null);
+            fetchMyComplaints();
+            setTimeout(() => {
+                setMessage({ type: '', text: '' });
+                setView('complaints');
+            }, 2000);
+        } catch (err) {
+            setMessage({ type: 'error', text: err.response?.data?.msg || 'Failed to submit.' });
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const deleteComplaint = async (id) => {
+        if (!confirm('Are you sure you want to delete this report?')) return;
+        try {
+            await axios.delete(`/complaints/${id}`);
+            setMessage({ type: 'success', text: '✅ Complaint deleted successfully.' });
+            fetchMyComplaints();
+        } catch (err) {
+            console.error(err);
+            setMessage({ type: 'error', text: 'Failed to delete complaint.' });
+        }
+    };
+
+    const filteredComplaints = filterStatus === 'all' ? myComplaints : myComplaints.filter(c => c.status === filterStatus);
+
+    const stats = {
+        total: myComplaints.length,
+        pending: myComplaints.filter(c => c.status === 'pending').length,
+        resolved: myComplaints.filter(c => c.status === 'completed').length,
+    };
+
+    const NavItem = ({ id, label, icon: Icon }) => (
+        <button
+            onClick={() => setView(id)}
+            className={`flex flex-col items-center justify-center p-2 rounded-xl transition-all duration-200 ${view === id
+                ? 'text-blue-600  bg-blue-50 '
+                : 'text-slate-400  hover:text-slate-600 '
+                }`}
+        >
+            <Icon size={24} strokeWidth={view === id ? 2.5 : 2} />
+            <span className="text-[10px] font-medium mt-1">{label}</span>
+        </button>
+    );
     return (
         <div className="max-w-4xl mx-auto pb-24 md:pb-0">
             {/* Connection Error Banner */}
