@@ -19,6 +19,12 @@ console.log("DB Config:", {
 app.use(cors());
 app.use(express.json());
 
+// Ngrok Bypass Middleware
+app.use((req, res, next) => {
+  res.setHeader("ngrok-skip-browser-warning", "true");
+  next();
+});
+
 // Serve uploaded images statically
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
