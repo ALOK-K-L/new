@@ -470,7 +470,7 @@ export default function CitizenDashboard({ initialView }) {
                                     <div className="flex gap-4">
                                         <div className="w-20 h-20 rounded-xl bg-slate-100  flex-shrink-0 overflow-hidden relative">
                                             {c.image_url ? (
-                                                <img src={`http://localhost:5000${c.image_url}`} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                                                <img src={`${axios.defaults.baseURL.replace('/api', '')}${c.image_url}`} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                                             ) : (
                                                 <div className="w-full h-full flex items-center justify-center text-slate-300">
                                                     <Image size={24} />

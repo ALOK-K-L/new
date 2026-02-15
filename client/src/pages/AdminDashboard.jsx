@@ -592,13 +592,11 @@ export default function AdminDashboard({ initialView }) {
                                                 try {
                                                     const res = await axios.post('/blockchain/repair');
                                                     alert(res.data.msg);
-                                                    // Refresh chain
-                                                    const chainRes = await axios.get('/blockchain');
-                                                    setBlockchainData(chainRes.data);
+                                                    fetchBlockchain(); // Use the safe fetch function
                                                 } catch (err) { alert('Sync Failed'); }
                                             }}
                                             className="bg-white/10 hover:bg-white/20 px-4 py-2 rounded-lg text-sm font-bold backdrop-blur-sm transition-colors border border-white/20 flex items-center gap-2">
-                                            <Activity size={16} /> Sync Chain
+                                            <RefreshCw size={16} /> Sync Chain
                                         </button>
                                     </div>
                                     <div className="absolute right-0 top-0 h-full w-1/2 bg-white/5 skew-x-12 transform translate-x-10"></div>
@@ -607,16 +605,16 @@ export default function AdminDashboard({ initialView }) {
                                 <div className="space-y-6">
                                     {['KSEB', 'PWD', 'Water Authority', 'Corporation'].map(dept => {
                                         // Filter blocks for this department
-                                        const deptBlocks = blockchainData.filter(b => {
+                                        const deptBlocks = Array.isArray(blockchainData) ? blockchainData.filter(b => {
                                             // Check top-level department column first (Modular Design)
                                             if (b.department === dept) return true;
 
                                             // Fallback to data-level check (Legacy)
                                             try {
                                                 const data = typeof b.data === 'string' ? JSON.parse(b.data) : b.data;
-                                                return data.department === dept || data.assigned_dept === dept || (data.type && data.type.includes(dept));
+                                                return data && (data.department === dept || data.assigned_dept === dept || (data.type && data.type.includes(dept)));
                                             } catch (e) { return false; }
-                                        });
+                                        }) : [];
 
                                         return (
                                             <div key={dept} className="bg-white  rounded-xl border border-slate-200  shadow-sm overflow-hidden">
