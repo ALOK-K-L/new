@@ -120,9 +120,16 @@ export default function CitizenDashboard({ initialView }) {
     const fetchMyComplaints = async () => {
         try {
             const res = await axios.get('/complaints');
-            setMyComplaints(res.data);
+            // Ensure data is array (handle Vercel 404/500 returning HTML)
+            if (Array.isArray(res.data)) {
+                setMyComplaints(res.data);
+            } else {
+                console.error("API returned non-array data:", res.data);
+                // Optional: setMessage({ type: 'error', text: 'Failed to load complaints.' });
+            }
         } catch (err) {
-            console.error(err);
+            console.error("Error fetching complaints:", err);
+            // If offline or CORS error, myComplaints remains [] which is safe
         }
     };
 

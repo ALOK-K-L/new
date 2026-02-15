@@ -13,23 +13,21 @@ export default function Layout({ children }) {
     }
 
     const isCitizen = user?.role === 'citizen';
-    // Mobile Header - Hidden for Citizens
-    const MobileHeader = () => (
-        <div className={`md:hidden flex items-center justify-between p-4 bg-bg-card dark:bg-dark-surface border-b border-border-color dark:border-gray-700 ${isCitizen ? 'hidden' : ''}`}>
-            <div className="flex items-center gap-2">
-                <button onClick={() => setSidebarOpen(!sidebarOpen)} className="p-2">
-                    <Menu size={24} />
-                </button>
-                <span className="font-bold text-lg">Civic Eye</span>
-            </div>
-            <ThemeToggle />
-        </div>
-    );
 
     return (
         <div className="min-h-screen bg-bg-page dark:bg-dark-background text-text-main dark:text-dark-text transition-colors duration-300">
-            {/* Mobile Header */}
-            {!isCitizen && <MobileHeader />}
+            {/* Mobile Header - Hidden for Citizens */}
+            {!isCitizen && (
+                <div className="md:hidden flex items-center justify-between p-4 bg-bg-card dark:bg-dark-surface border-b border-border-color dark:border-gray-700">
+                    <div className="flex items-center gap-2">
+                        <button onClick={() => setSidebarOpen(!sidebarOpen)} className="p-2">
+                            <Menu size={24} />
+                        </button>
+                        <span className="font-bold text-lg">Civic Eye</span>
+                    </div>
+                    <ThemeToggle />
+                </div>
+            )}
 
             {/* Sidebar (Desktop & Mobile Wrapper) */}
             {/* For Citizens: Hidden on mobile (hidden), Visible on desktop (md:block) */}
