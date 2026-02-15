@@ -7,7 +7,7 @@ import AIChatbot from '../components/AIChatbot';
 import DarkModeToggle from '../components/DarkModeToggle';
 import BlockchainVisualizer from '../components/BlockchainVisualizer';
 import 'leaflet/dist/leaflet.css';
-import { LayoutDashboard, BarChart3, List, Map as MapIcon, Link as LinkIcon, Brain, TrendingUp, DollarSign, Activity, PieChart as PieChartIcon, ArrowUpRight, Calendar, Hash } from 'lucide-react';
+import { LayoutDashboard, BarChart3, List, Map as MapIcon, Link as LinkIcon, Brain, TrendingUp, DollarSign, Activity, PieChart as PieChartIcon, ArrowUpRight, Calendar, Hash, RefreshCw } from 'lucide-react';
 
 import L from 'leaflet';
 import icon from 'leaflet/dist/images/marker-icon.png';
