@@ -11,6 +11,8 @@ export const AuthProvider = ({ children }) => {
 
     // Configure axios base URL
     axios.defaults.baseURL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+    // Required header to bypass Ngrok's free-tier browser interstitial page
+    axios.defaults.headers.common['ngrok-skip-browser-warning'] = 'true';
 
     useEffect(() => {
         // Check for token on load

@@ -86,3 +86,8 @@
 [COMPLAINT] AI Null/Failed for #72. isOthers=false
 [COMPLAINT] AI Null/Failed for #73. isOthers=true
 [COMPLAINT] Fallback Block Error: blockLocation is not defined
+[BLOCKCHAIN] Adding block: LEGACY_SYNC for ID 73
+[BLOCKCHAIN] Success: Block #1034 added.
+[BLOCKCHAIN] Adding block: COMPLAINT_FILED for ID 74
+[BLOCKCHAIN] Success: Block #1035 added.
+[COMPLAINT] AI Null/Failed for #74. isOthers=false

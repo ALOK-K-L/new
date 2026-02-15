@@ -102,3 +102,9 @@ Body: {"type":"Other","description":"i have electricity problem and i want help 
 
 [2026-02-15T18:03:07.098Z] POST /complaints
 Body: {"type":"Other","description":"i have electricity problem and i want help please","latitude":"8.468256370563228","longitude":"76.95428444877787"}
+
+[2026-02-15T18:59:17.965Z] POST /complaints
+Body: {"type":"Pothole","description":"s","latitude":"10.842423764208744","longitude":"76.29233765408902"}
+
+[2026-02-15T18:59:17.966Z] POST /complaints
+Body: {"type":"Pothole","description":"s","latitude":"10.842423764208744","longitude":"76.29233765408902"}
