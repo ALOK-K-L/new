@@ -155,7 +155,11 @@ export default function DepartmentDashboard({ initialView }) {
     const fetchComplaints = async () => {
         try {
             const res = await axios.get('/complaints');
-            setComplaints(res.data);
+            if (Array.isArray(res.data)) {
+                setComplaints(res.data);
+            } else {
+                console.error("Dept: API returned non-array complaints:", res.data);
+            }
             setLoading(false);
         } catch (err) {
             console.error(err);
@@ -166,7 +170,9 @@ export default function DepartmentDashboard({ initialView }) {
     const fetchGroupedData = async () => {
         try {
             const res = await axios.get('/complaints/grouped');
-            setGroupedData(res.data);
+            if (Array.isArray(res.data)) {
+                setGroupedData(res.data);
+            }
         } catch (err) {
             console.error('Grouped:', err);
         }

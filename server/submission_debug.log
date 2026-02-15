@@ -96,3 +96,9 @@ Body: {"type":"Water Leak","description":"ss","latitude":"8.467763456526098","lo
 
 [2026-02-15T17:01:59.543Z] POST /complaints
 Body: {"type":"Water Leak","description":"ss","latitude":"8.467763456526098","longitude":"76.95438767642447"}
+
+[2026-02-15T18:03:07.097Z] POST /complaints
+Body: {"type":"Other","description":"i have electricity problem and i want help please","latitude":"8.468256370563228","longitude":"76.95428444877787"}
+
+[2026-02-15T18:03:07.098Z] POST /complaints
+Body: {"type":"Other","description":"i have electricity problem and i want help please","latitude":"8.468256370563228","longitude":"76.95428444877787"}

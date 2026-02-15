@@ -131,10 +131,14 @@ export default function AdminDashboard({ initialView }) {
     const fetchComplaints = async () => {
         try {
             const res = await axios.get('/complaints');
-            setComplaints(res.data);
+            if (Array.isArray(res.data)) {
+                setComplaints(res.data);
+            } else {
+                console.error("Admin: API returned non-array complaints:", res.data);
+            }
             setLoading(false);
         } catch (err) {
-            console.error(err);
+            console.error("Admin: Error fetching complaints:", err);
             setLoading(false);
         }
     };
@@ -142,18 +146,24 @@ export default function AdminDashboard({ initialView }) {
     const fetchGroupedData = async () => {
         try {
             const res = await axios.get('/complaints/grouped');
-            setGroupedData(res.data);
+            if (Array.isArray(res.data)) {
+                setGroupedData(res.data);
+            }
         } catch (err) {
-            console.error('Grouped data error:', err);
+            console.error('Admin: Grouped data error:', err);
         }
     };
 
     const fetchBlockchain = async () => {
         try {
             const res = await axios.get('/blockchain');
-            setBlockchainData(res.data);
+            // Support both array or { chain: [] } format if changed later
+            const data = Array.isArray(res.data) ? res.data : (res.data.chain || []);
+            if (Array.isArray(data)) {
+                setBlockchainData(data);
+            }
         } catch (err) {
-            console.error('Blockchain error:', err);
+            console.error('Admin: Blockchain error:', err);
         }
     };
 

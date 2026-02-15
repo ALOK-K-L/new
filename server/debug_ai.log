@@ -84,3 +84,5 @@
 [BLOCKCHAIN] Adding block: COMPLAINT_FILED for ID 72
 [BLOCKCHAIN] Success: Block #1033 added.
 [COMPLAINT] AI Null/Failed for #72. isOthers=false
+[COMPLAINT] AI Null/Failed for #73. isOthers=true
+[COMPLAINT] Fallback Block Error: blockLocation is not defined
